@@ -5,9 +5,11 @@ void MyServer::OnConnect(TCPConnection & newConnection)
 {
 	std::cout << newConnection.ToString() << " - New connection accepted." << std::endl;
 
+	
 	std::shared_ptr<Packet> welcomeMessagePacket = std::make_shared<Packet>(PacketType::PT_ChatMessage);
 	*welcomeMessagePacket << std::string("Welcome!");
 	newConnection.pm_outgoing.Append(welcomeMessagePacket);
+	
 
 	std::shared_ptr<Packet> newUserMessagePacket = std::make_shared<Packet>(PacketType::PT_ChatMessage);
 	*newUserMessagePacket << std::string("New user connected!");
