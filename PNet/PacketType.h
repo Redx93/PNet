@@ -8,6 +8,6 @@ namespace PNet
 		PT_Invalid,
 		PT_ChatMessage,
 		PT_IntegerArray,
-		PT_Test
+		PT_Player
 	};
 }

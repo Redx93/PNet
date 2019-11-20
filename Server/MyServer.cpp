@@ -45,7 +45,8 @@ bool MyServer::ProcessPacket(std::shared_ptr<Packet> packet)
 	{
 		std::string chatmessage;
 		*packet >> chatmessage;
-		std::cout << "Chat Message: " << chatmessage << std::endl;
+		//std::cout << "Chat Message: " << chatmessage << std::endl;
+		std::cout << "Player name: " << chatmessage << std::endl;
 		break;
 	}
 	case PacketType::PT_IntegerArray:
@@ -55,9 +56,11 @@ bool MyServer::ProcessPacket(std::shared_ptr<Packet> packet)
 		std::cout << "Array Size: " << arraySize << std::endl;
 		for (uint32_t i = 0; i < arraySize; i++)
 		{
-			uint32_t element = 0;
+			/*uint32_t element = 0;
 			*packet >> element;
-			std::cout << "Element[" << i << "] - " << element << std::endl;
+			std::cout << "Element[" << i << "] - " << element << std::endl;*/
+			*packet >> player.score;
+			std::cout << "Player score: "<< player.score<< std::endl;
 		}
 		break;
 	}
