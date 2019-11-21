@@ -10,16 +10,31 @@ void MyServer::OnConnect(TCPConnection & newConnection)
 	*welcomeMessagePacket << std::string("Welcome!");
 	newConnection.pm_outgoing.Append(welcomeMessagePacket);
 	
-
-	std::shared_ptr<Packet> newUserMessagePacket = std::make_shared<Packet>(PacketType::PT_ChatMessage);
-	*newUserMessagePacket << std::string("New user connected!");
-	for (auto & connection : connections)
+	// Send playerstats packet
+	std::shared_ptr<Packet> playerPacket = std::make_shared<Packet>(PacketType::PT_Player);
+	uint32_t playerSize = this->players.size();
+	*playerPacket << playerSize;
+	std::cout << "Number of Players : " << playerSize << std::endl;
+	for (auto player : players)
 	{
-		if (&connection == &newConnection)
-			continue;
-
-		connection.pm_outgoing.Append(newUserMessagePacket);
+		std::cout << "Inside for loop in server for Players : " << playerSize << std::endl;
+		std::string name = player.name;
+		std::uint32_t score = player.score;
+		*playerPacket << name;
+		*playerPacket << score;
 	}
+	newConnection.pm_outgoing.Append(playerPacket);
+	//
+
+	//std::shared_ptr<Packet> newUserMessagePacket = std::make_shared<Packet>(PacketType::PT_ChatMessage);
+	//*newUserMessagePacket << std::string("New user connected!");
+	//for (auto & connection : connections)
+	//{
+	//	if (&connection == &newConnection)
+	//		continue;
+
+	//	connection.pm_outgoing.Append(newUserMessagePacket);
+	//}
 }
 
 void MyServer::OnDisconnect(TCPConnection & lostConnection, std::string reason)
@@ -56,11 +71,11 @@ bool MyServer::ProcessPacket(std::shared_ptr<Packet> packet)
 		std::cout << "Array Size: " << arraySize << std::endl;
 		for (uint32_t i = 0; i < arraySize; i++)
 		{
-			/*uint32_t element = 0;
+			uint32_t element = 0;
 			*packet >> element;
-			std::cout << "Element[" << i << "] - " << element << std::endl;*/
-			*packet >> player.score;
-			std::cout << "Player score: "<< player.score<< std::endl;
+			std::cout << "Element[" << i << "] - " << element << std::endl;
+	/*		*packet >> player.score;
+			std::cout << "Player score: "<< player.score<< std::endl;*/
 		}
 		break;
 	}
