@@ -12,7 +12,7 @@ int main()
 			server.players.push_back(PlayerStat(arr[i], i));
 		}
 
-		if (server.Initialize(IPEndpoint("::", 6112)))
+		if (server.Initialize(IPEndpoint("::", 6113)))
 		{
 			while (true)
 			{

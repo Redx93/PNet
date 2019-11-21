@@ -11,10 +11,10 @@ struct PlayerStat
 
 class MyServer : public Server
 {
+
 public:
-	std::vector<PlayerStat> players;
-private:
 	void OnConnect(TCPConnection & newConnection) override;
 	void OnDisconnect(TCPConnection & lostConnection, std::string reason) override;
 	bool ProcessPacket(std::shared_ptr<Packet> packet) override;
+	std::vector<PlayerStat> players;
 };
